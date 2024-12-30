@@ -11,6 +11,7 @@ from frappe.utils import getdate
 from india_compliance.gst_india.utils import get_full_gst_uom
 from india_compliance.gst_india.utils.gstr_1 import (
     CATEGORY_SUB_CATEGORY_MAPPING,
+    OVERLAPPING_INVOICE_SUBCATEGORIES,
     GSTR1_B2B_InvoiceType,
     GSTR1_Category,
     GSTR1_SubCategory,
@@ -336,7 +337,7 @@ class GSTR1Subcategory(GSTR1CategoryConditions):
         supply_type = "Inter-State" if is_interstate else "Intra-State"
 
         invoice.invoice_type = f"{supply_type} supplies to {gst_registration} persons"
-        invoice.invoice_sub_category = GSTR1_SubCategory.NIL_EXEMPT.value
+        invoice.invoice_sub_category = invoice.gst_treatment
 
     def set_for_cdnr(self, invoice):
         self._set_invoice_type_for_b2b_and_cdnr(invoice)
@@ -577,27 +578,19 @@ class GSTR1Invoices(GSTR1Query, GSTR1Subcategory):
         return summary
 
     def update_overlaping_invoice_summary(self, sub_category_summary, final_summary):
-        nil_exempt = GSTR1_SubCategory.NIL_EXEMPT.value
-        supecom_52 = GSTR1_SubCategory.SUPECOM_52.value
-        supecom_9_5 = GSTR1_SubCategory.SUPECOM_9_5.value
-
         # Get Unique Taxable Invoices
         unique_invoices = set()
         for category, row in sub_category_summary.items():
-            if category in (nil_exempt, supecom_52, supecom_9_5):
+            if category in OVERLAPPING_INVOICE_SUBCATEGORIES:
                 continue
 
             unique_invoices.update(row["unique_records"])
 
         # Get Overlaping Invoices
         invoice_sets = [
-            sub_category_summary[nil_exempt]["unique_records"],
-            {
-                *sub_category_summary[supecom_52]["unique_records"],
-                *sub_category_summary[supecom_9_5]["unique_records"],
-            },
-            unique_invoices,
-        ]
+            sub_category_summary[subcategory]["unique_records"]
+            for subcategory in OVERLAPPING_INVOICE_SUBCATEGORIES
+        ] + [unique_invoices]
 
         overlaping_invoices = []
 

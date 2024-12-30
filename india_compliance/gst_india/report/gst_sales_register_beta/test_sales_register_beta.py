@@ -18,6 +18,25 @@ FILTERS = {
 
 EXPECTED_SUMMARY_BY_HSN = [
     {
+        "item_code": "_Test Non GST Item",
+        "gst_hsn_code": "27131100",
+        "billing_address_gstin": None,
+        "company_gstin": "24AAQCA8719H1ZC",
+        "customer_name": "_Test Unregistered Customer",
+        "place_of_supply": "24-Gujarat",
+        "invoice_total": 5000.0,
+        "returned_invoice_total": 0.0,
+        "gst_category": "Unregistered",
+        "gst_treatment": "Non-GST",
+        "gst_rate": 0.0,
+        "taxable_value": 5000.0,
+        "total_amount": 5000.0,
+        "total_tax_amount": 0.0,
+        "invoice_category": "Nil-Rated, Exempted, Non-GST",
+        "invoice_sub_category": "Non-GST",
+        "invoice_type": "Intra-State supplies to unregistered persons",
+    },
+    {
         "item_code": "_Test Service Item",
         "gst_hsn_code": "999900",
         "billing_address_gstin": None,
@@ -167,7 +186,7 @@ EXPECTED_SUMMARY_BY_HSN = [
         "total_tax_amount": 0.0,
         "invoice_category": "Nil-Rated, Exempted, Non-GST",
         "invoice_type": "Inter-State supplies to registered persons",
-        "invoice_sub_category": "Nil-Rated, Exempted, Non-GST",
+        "invoice_sub_category": "Nil-Rated",
     },
     {
         "item_code": "_Test Service Item",
@@ -205,7 +224,7 @@ EXPECTED_SUMMARY_BY_HSN = [
         "total_tax_amount": 0.0,
         "invoice_category": "Nil-Rated, Exempted, Non-GST",
         "invoice_type": "Inter-State supplies to registered persons",
-        "invoice_sub_category": "Nil-Rated, Exempted, Non-GST",
+        "invoice_sub_category": "Nil-Rated",
     },
     {
         "item_code": "_Test Service Item",
@@ -242,7 +261,7 @@ EXPECTED_SUMMARY_BY_HSN = [
         "total_tax_amount": 0.0,
         "invoice_category": "Nil-Rated, Exempted, Non-GST",
         "invoice_type": "Intra-State supplies to unregistered persons",
-        "invoice_sub_category": "Nil-Rated, Exempted, Non-GST",
+        "invoice_sub_category": "Nil-Rated",
     },
     {
         "item_code": "_Test Service Item",
@@ -279,7 +298,7 @@ EXPECTED_SUMMARY_BY_HSN = [
         "total_tax_amount": 0.0,
         "invoice_category": "Nil-Rated, Exempted, Non-GST",
         "invoice_type": "Intra-State supplies to unregistered persons",
-        "invoice_sub_category": "Nil-Rated, Exempted, Non-GST",
+        "invoice_sub_category": "Nil-Rated",
     },
     {
         "item_code": "_Test Service Item",
@@ -316,7 +335,7 @@ EXPECTED_SUMMARY_BY_HSN = [
         "total_tax_amount": 0.0,
         "invoice_category": "Nil-Rated, Exempted, Non-GST",
         "invoice_type": "Inter-State supplies to unregistered persons",
-        "invoice_sub_category": "Nil-Rated, Exempted, Non-GST",
+        "invoice_sub_category": "Nil-Rated",
     },
 ]
 
@@ -423,7 +442,7 @@ EXPECTED_OVERVIEW = [
     {
         "description": "B2C (Others)",
         "indent": 0,
-        "taxable_value": 121000.0,
+        "taxable_value": 121000,
         "igst_amount": 1800.0,
         "cgst_amount": 9990.0,
         "sgst_amount": 9990.0,
@@ -441,6 +460,15 @@ EXPECTED_OVERVIEW = [
     {
         "description": "Nil-Rated, Exempted, Non-GST",
         "indent": 0,
+        "taxable_value": 50000.0,
+        "igst_amount": 0.0,
+        "cgst_amount": 0.0,
+        "sgst_amount": 0.0,
+        "total_cess_amount": 0.0,
+    },
+    {
+        "description": "Nil-Rated",
+        "indent": 1,
         "taxable_value": 45000.0,
         "igst_amount": 0.0,
         "cgst_amount": 0.0,
@@ -448,9 +476,18 @@ EXPECTED_OVERVIEW = [
         "total_cess_amount": 0.0,
     },
     {
-        "description": "Nil-Rated, Exempted, Non-GST",
+        "description": "Exempted",
         "indent": 1,
-        "taxable_value": 45000.0,
+        "taxable_value": 0,
+        "igst_amount": 0.0,
+        "cgst_amount": 0.0,
+        "sgst_amount": 0.0,
+        "total_cess_amount": 0.0,
+    },
+    {
+        "description": "Non-GST",
+        "indent": 1,
+        "taxable_value": 5000.0,
         "igst_amount": 0.0,
         "cgst_amount": 0.0,
         "sgst_amount": 0.0,
@@ -638,6 +675,18 @@ INVOICES = [
                 "rate": 2000,
                 "qty": -150,
             },
+        ],
+    },
+    {
+        "company_gstin": "24AAQCA8719H1ZC",
+        "customer": "_Test Unregistered Customer",
+        "place_of_supply": "24-Gujarat",
+        "items": [
+            {
+                "item_code": "_Test Non GST Item",
+                "rate": 100,
+                "qty": 50,
+            }
         ],
     },
 ]

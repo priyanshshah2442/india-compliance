@@ -41,6 +41,9 @@ class GSTR1_SubCategory(Enum):
     B2CL = "B2C (Large)"
     B2CS = "B2C (Others)"
     NIL_EXEMPT = "Nil-Rated, Exempted, Non-GST"
+    NIL_RATED = "Nil-Rated"
+    EXEMPTED = "Exempted"
+    NON_GST = "Non-GST"
     CDNR = "Credit/Debit Notes (Registered)"
     CDNUR = "Credit/Debit Notes (Unregistered)"
 
@@ -71,7 +74,11 @@ CATEGORY_SUB_CATEGORY_MAPPING = {
     GSTR1_Category.B2CL: (GSTR1_SubCategory.B2CL,),
     GSTR1_Category.EXP: (GSTR1_SubCategory.EXPWP, GSTR1_SubCategory.EXPWOP),
     GSTR1_Category.B2CS: (GSTR1_SubCategory.B2CS,),
-    GSTR1_Category.NIL_EXEMPT: (GSTR1_SubCategory.NIL_EXEMPT,),
+    GSTR1_Category.NIL_EXEMPT: (
+        GSTR1_SubCategory.NIL_RATED,
+        GSTR1_SubCategory.EXEMPTED,
+        GSTR1_SubCategory.NON_GST,
+    ),
     GSTR1_Category.CDNR: (GSTR1_SubCategory.CDNR,),
     GSTR1_Category.CDNUR: (GSTR1_SubCategory.CDNUR,),
     GSTR1_Category.AT: (GSTR1_SubCategory.AT,),
@@ -83,6 +90,16 @@ CATEGORY_SUB_CATEGORY_MAPPING = {
         GSTR1_SubCategory.SUPECOM_9_5,
     ),
 }
+
+OVERLAPPING_INVOICE_SUBCATEGORIES = frozenset(
+    (
+        GSTR1_SubCategory.NIL_RATED.value,
+        GSTR1_SubCategory.EXEMPTED.value,
+        GSTR1_SubCategory.NON_GST.value,
+        GSTR1_SubCategory.SUPECOM_52.value,
+        GSTR1_SubCategory.SUPECOM_9_5.value,
+    )
+)
 
 
 class GSTR1_DataField(Enum):
